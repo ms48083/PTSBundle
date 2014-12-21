@@ -1,0 +1,140 @@
+{% extends '::base.html.twig' %}
+{# LOGS layout.html.twig #}
+
+{% block body %}
+<body>
+<div id="simplecontent">
+<strong>Transaction Logs</strong>
+--Use the first row to filter results by setting criteria and click the apply button.  Reset will clear the filter
+<br>
+</div>
+{# Transaction and Event Log Tables #}
+<form class="filters" action="{{ path('pts_logs') }}" method="post">
+<div id="logtablediv">
+	<table class="log-table">
+	<colgroup>
+		<col width=65>
+		<col width=70>
+		<col width=95>
+		<col width=150>
+		<col width=75>
+		<col width=100>
+		<col width=20>
+		<col width=100>
+		<col width=100>
+		<col width=100>
+		<col width=130>
+		<col width=110>
+	</colgroup>
+	<tr>
+		<th>System</th>
+		<th>Trans#</th>
+		<th>Event Type</th>
+		<th>Event Start</th>
+		<th>Duration</th>
+		<th>Main Station</th>
+		<th> </th>
+		<th>Sub Station</th>
+		<th>Badge #</th>
+		<th>Status</th>
+		<th>Flags</th>
+		<th>&nbsp;Action</th>
+	</tr>
+	<tr>
+	<div class="logrow">
+		{# <form class="filters" action="{{ path('pts_logs') }}" method="post"> #}
+		<td><input type = "text" style="font-size:10px" name="sysnum" id="mysysnum" size="2" 
+		{% if where.sysnum is defined %}
+			value={{ where.sysnum }}
+		{% endif %}>
+		</td>
+		<td><input type = "text" style="font-size:10px" name="trans" id="mytrans" size="4" disabled> 
+		</td>
+		<td>
+		<select name="eventnum" style="font-size:10px">
+			<option value=0>All</option>
+			<option value=1 
+				{% if where.eventnum is defined %}{% if where.eventnum == 1 %}selected
+				{% endif %}{% endif %}>Transactions</option>
+			<option value=2
+				{% if where.eventnum is defined %}{% if where.eventnum == 2 %}selected
+				{% endif %}{% endif %}>Events</option>
+		</select>
+		</td>
+		<td><input type = "date" style="font-size:10px" name="datefrom" id="mydatefrom" size="7"
+		{% if where.datefrom is defined %}
+			value={{ where.datefrom }}
+		{% endif %}>
+		</td>
+		<td><input type = "text" style="font-size:10px" name="duration" id="myduration" size="3" disabled> 
+		</td>		
+		<td><input type = "text" style="font-size:10px" name="srcsta" id="mysrc" size="10"
+			{% if where.srcsta is defined %}
+				value='{{ where.srcsta }}'
+			{% endif %}>
+		</td>		
+		<td></td>
+		<td><input type = "text" style="font-size:10px" name="deststa" id="mydest" size="10" 
+			{% if where.deststa is defined %}
+				value='{{ where.deststa }}'
+			{% endif %}>
+		</td>		
+		<td><input type = "text" style="font-size:10px" name="badge" id="mybadge" size="12"
+			{% if where.ReceiverID is defined %}
+				value={{ where.ReceiverID }}
+			{% endif %}>
+		</td>		
+		<td><input type = "text" style="font-size:10px" name="status" id="mystatus" size="2" disabled> 
+		</td>		
+		<td><input type = "text" style="font-size:10px" name="flags" id="myflags" size="2" disabled>
+		</td><td>
+		<input type="submit" style="font-size:10px" name="refresh" value="apply">
+		<a href="{{ path('pts_logs') }}">reset</a>
+		{# </form>	#}
+	</div>
+	</tr>
+	{% for entry in eLog %}
+		<div class="logrow">
+			<tr class="logrow">
+			<td>{{ entry.System }}</td>
+			<td>{{ entry.TransNum }}</td>
+			<td>{#{{ entry.EventType }}.#}{{ entry.strEvent }}</td>
+			<td>{{ entry.EventStart }}</td>
+			<td>{{ entry.Duration }}</td>
+			<td>{# {{ entry.Source }}. #}{{ entry.MainStationName }}</td>
+			<td>{% if (entry.Source == 0) and (entry.Status < 32) %} 
+			<img src="{{ asset('bundles/mstspts/images/arrow-right1.png') }}" alt="" width="16" height="15" />
+			{% elseif (entry.Source > 0) and (entry.Status < 32) %}
+			<img src="{{ asset('bundles/mstspts/images/arrow-left1.png') }}" alt="" width="16" height="15" />
+			{% endif %}</td>
+			<td>{# {{ entry.Destination }}. #}{{ entry.SubStationName }}</td>
+			<td>{{ entry.ReceiverID }}</td>
+			<td>{{ entry.Status }}:{{ entry.strStatus }}</td>
+			<td colspan="2">{{ entry.Flags }}:{{ entry.strFlags }}</td>
+			</tr>
+		</div>
+	{% endfor %}
+	</table>
+
+	{#
+		{% include 'MakerLabsPagerBundle:Pager:paginate.html.twig' 
+			with {'pager': pager, 'route': 'pts_logs', 'parameters': {'from': 'pager'}} %}
+	#}
+	<br>{{ eLog|length }} rows; limit 
+    <input type = "text" style="font-size:10px" name="numrows" id="numrows" size="2" 
+		{% if where.numrows is defined %}
+			value={{ where.numrows }}
+        {% else %}
+            value=100
+    {% endif %}> rows per page; current page 
+    {% if where.pagenum is defined %} {{ where.pagenum }} {% else %} x; {% endif %}
+    <input type = "hidden" name="pagenum" id="pagenum" value={% if where.pagenum is defined %} {{ where.pagenum }} {% else %} 1 {% endif %}>
+    <input type="submit" style="font-size:10px" name="nextpage" value="Next Page"
+    {% if eLog|length < where.numrows %} disabled {% endif %}>
+    <input type = "hidden" name="pagekey" id="pagekey" {% if eLog|length == where.numrows %} value="{{ eLog[eLog|length-1].EventStart }}" {% endif %}>
+
+        
+</div>
+</form>
+</body>
+{% endblock %}

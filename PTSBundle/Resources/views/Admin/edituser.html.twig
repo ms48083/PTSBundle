@@ -1,0 +1,46 @@
+{% extends '::base.html.twig' %}
+{# ADMIN edituser.html.twig #}
+
+{% block body %}
+<body>
+<div id="simplecontent">
+<strong>System Administration</strong>
+<br><br>
+{% if RecNo > 0 %}
+	<strong>Edit User {{ RecNo }}</strong>
+{% else %}
+	<strong>Add New User</strong>
+{% endif %}
+{# Add/Edit User #}
+	<br>
+<form class="edituser" action="{{ path('pts_admin_eu', {'slug': RecNo}) }}" method="post">
+	<br>First Name <input type = "text" name="fname" id="myfname" size="20" 
+	{% if eUser.FName is defined %}
+		value={{ eUser.FName }}
+	{% endif %}>
+	<br>Last Name <input type = "text" name="lname" id="mylname" size="30" 
+	{% if eUser.LName is defined %}
+		value={{ eUser.LName }}
+	{% endif %}>
+	<br>ID Number <input type = "text" name="idnum" id="myidnum" size="12" 
+	{% if eUser.IDNum is defined %}
+		value={{ eUser.IDNum }}
+	{% endif %}>
+	<br>Active <input type = "checkbox" name="active" id="myactive"
+	{% if eUser.Active is defined %}
+		{% if eUser.Active != 'N' %}
+			checked
+		{% endif %}
+	{% else %}
+		checked
+	{% endif %}>	
+	<input type = "hidden" name="recno" value={{ RecNo }}>
+	<br>
+	<br><INPUT type="submit" name="save" value="Save"></INPUT>
+	<INPUT type="submit" name="saveadd" value="Save + Add New"></INPUT>
+	<INPUT type="submit" name="cancel" value="Cancel"></INPUT>
+</form>
+</div>
+
+</body>
+{% endblock %}

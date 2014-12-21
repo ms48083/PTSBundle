@@ -1,0 +1,74 @@
+{% extends '::base.html.twig' %}
+{# ADMIN layout.html.twig #}
+
+{% block body %}
+<body>
+<div id="simplecontent">
+<strong>User Administration</strong> --Click a header name to sort by that field.  Ctrl-F to Find.  Click Active [N] to show inactive users.
+{# <br>Reset Password #}
+<br><br>
+{% for flashMessage in app.session.flashbag.get('notice') %}
+	<div class="flash-notice">
+		{{ flashMessage }}
+	</div>
+{% endfor %}
+</div>
+{# check for last filter for active #}
+	{% if where.active is defined %}{% if where.active == 'an' %}
+		{% set act = 'an' %}
+	  {% else %}
+		{% set act = 'ay' %}
+	  {% endif %}
+	{% else %}
+		{% set act = 'ay' %}
+	{% endif %}
+{# check for last sort #}
+	{% if where.sort is defined %}
+		{% set lastsort = where.sort %}
+	{% else %}
+		{% set lastsort = 'ln' %}
+	{% endif %}
+{# Transaction and Event Log Tables #}
+<div id="logtablediv">
+<br><strong>Tube System Users</strong>
+&nbsp;&nbsp;<a href="{{ path('pts_admin_eu', {'slug': 0 }) }}">[add new user]</a><br><br>
+	<table class="log-table">
+
+	<tr>
+		<th><a href="{{ path('pts_admin_sort', {'sort': 'an', active: act }) }}">Associate ID</a></th>
+		<th><a href="{{ path('pts_admin_sort', {'sort': 'bn', active: act }) }}">Badge Number</a></th>
+		<th><a href="{{ path('pts_admin_sort', {'sort': 'ln', active: act }) }}">Last Name</a></th>
+		<th><a href="{{ path('pts_admin_sort', {'sort': 'fn', active: act }) }}">First Name</a></th>
+		<th>Active <a href="{{ path('pts_admin_sort', {'sort': lastsort, 'active': 'ay'}) }}">[Y]
+		           <a href="{{ path('pts_admin_sort', {'sort': lastsort, 'active': 'an'}) }}">[N]</th>
+		<th><a href="{{ path('pts_admin_sort', {'sort': 'la', active: act }) }}">Last Activity</a></th>
+		<th>Actions</th>
+	</tr>
+	{% for entry in eUsers %}
+		<div class="logrow">
+			<tr class="logrow">
+			<td>{{ entry.IDNum }}</td>
+			<td>{{ entry.CardNum }}</td>
+			<td>{{ entry.LName }}</td>
+			<td>{{ entry.FName }}</td>
+			<td>{{ entry.Active }}</td>
+			<td>{{ entry.LastEvent }}</td>
+			<td><a href="{{ path('pts_admin_eu', {'slug': entry.RecNo}) }}">Edit</a>
+			    &nbsp;|&nbsp;
+			    <a href="{{ path('pts_logs', {'badge': entry.CardNum}) }}">History</a></td>
+			</tr>
+		</div>
+	{% endfor %}
+	
+	</table>
+    <br>{{ eUsers|length }} users;
+	<br>
+</div>
+
+{#
+ <div id="footer">
+ <a style="text-align:left; font-size:11px; font-family: Verdana, Arial;" href="http://www.mstechsol.com" title="www.mstechsol.com">Powered by MS Technology Solutions LLC</a>
+ </div>
+#}
+</body>
+{% endblock %}

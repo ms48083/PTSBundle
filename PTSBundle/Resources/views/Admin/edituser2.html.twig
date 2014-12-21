@@ -1,0 +1,31 @@
+{% extends '::base.html.twig' %}
+{# ADMIN edituser2.html.twig #}
+
+{% block body %}
+<body>
+<div id="simplecontent">
+<strong>System Administration</strong>
+{% for flashMessage in app.session.flashbag.get('notice') %}
+	<div class="flash-notice">
+		{{ flashMessage }}
+	</div>
+{% endfor %}
+<br><br>
+{% if RecNo > 0 %}
+	<strong>Edit User {{ RecNo }}</strong>
+{% else %}
+	<strong>Add New User</strong>
+{% endif %}
+<br>
+{# Add/Edit User #}
+<br>
+<form class="edituser" action="{{ path('pts_admin_eu', {'slug': RecNo}) }}" method="post" {{ form_enctype(form) }}>
+	{{ form_widget(form) }}
+	<br><INPUT type="submit" name="save" value="Save"></INPUT>
+	<INPUT type="submit" name="saveadd" value="Save + Add New"></INPUT>
+	{# <INPUT type="submit" name="cancel" value="Cancel" class="cancel"></INPUT> #}
+</form>
+</div>
+
+</body>
+{% endblock %}

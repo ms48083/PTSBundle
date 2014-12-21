@@ -1,0 +1,32 @@
+{% extends '::base.html.twig' %}
+{# SECURITY layout.html.twig #}
+
+{% block body %}
+<body>
+<br><strong>Welcome to the Colombo Pneumatic Tube Management System.</strong>
+<br><strong>This is a restricted system.  Please login to access the available resources.</strong>
+<br><br>
+{% if error %}
+    <br><div>{{ error.message }}</div><br>
+{% endif %}
+
+<form action="{{ path('login_check') }}" method="post">
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="_username" value="{{ last_username }}" />
+    <br>
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="_password" />
+
+    {#
+        If you want to control the URL the user
+        is redirected to on success (more details below)
+        <input type="hidden" name="_target_path" value="/account" />
+    #}
+	<br>
+    <button type="submit">login</button>
+</form>
+<div id="footer">
+<a style="text-align:left; font-size:11px; font-family: Verdana, Arial;" href="http://www.mstechsol.com" title="www.mstechsol.com">Powered by MS Technology Solutions LLC</a>
+</div>
+</body>
+{% endblock %}

@@ -1,0 +1,59 @@
+mstspts_homepage:
+    pattern:  /hello/{name}
+    defaults: { _controller: MSTSPTSBundle:Default:index }
+
+pts_root:
+    pattern:  /
+    defaults: { _controller: MSTSPTSBundle:Home:index }
+
+login:
+    pattern:  /login
+    defaults: { _controller: MSTSPTSBundle:Security:login }
+
+login_check:
+    pattern:  /login_check
+
+logout:
+    pattern:  /logout
+
+pts_logs:
+    pattern:  /logs/{badge}
+    defaults: { _controller: MSTSPTSBundle:Logs:index, badge: 0 }
+
+pts_diags:
+    pattern:  /diags
+    defaults: { _controller: MSTSPTSBundle:Diags:index }
+
+pts_settings:
+    pattern:  /settings
+    defaults: { _controller: MSTSPTSBundle:Settings:index }
+
+pts_contact:
+    pattern:  /contact
+    defaults: { _controller: MSTSPTSBundle:Contact:index }
+
+pts_about:
+    pattern:  /about
+    defaults: { _controller: MSTSPTSBundle:About:index }
+
+pts_admin:
+    pattern:  /admin
+    defaults: { _controller: MSTSPTSBundle:Admin:index, sort: 'ln' , active: 'ay'}
+
+pts_admin_sort:
+    pattern:  /admin/{sort}/{active}
+    defaults: { _controller: MSTSPTSBundle:Admin:index, sort: 'ln', active: 'ay'}
+    requirements: 
+        sort: an|bn|ln|fn|la
+        active: ay|an
+
+pts_admin_eu:
+    pattern:  /admin/{slug}
+    defaults: { _controller: MSTSPTSBundle:Admin:edituser }
+    requirements:
+        slug:  \d+
+
+pts_system:
+    pattern:  /sys2321
+    defaults: { _controller: MSTSPTSBundle:System:index }
+

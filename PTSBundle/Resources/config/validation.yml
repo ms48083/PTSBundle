@@ -1,0 +1,23 @@
+# MSTS/PTSBundle/Resources/config/validation.yml
+MSTS\PTSBundle\Entity\PTSUser:
+ properties:
+  FName:
+    - NotBlank: ~
+    - Length:
+        max: 20
+  LName:
+    - NotBlank: ~
+    - Length:
+        max: 30
+  IDNum:
+    - NotBlank: ~
+    - Length:
+        max: 20
+  CardNum:
+    - NotBlank: ~
+    - Range:
+       min: 150000000000
+       max: 155999999999
+       minMessage: Must be at least 150000000000
+       maxMessage: Must be no more than 155999999999
+       invalidMessage: Must be numeric
