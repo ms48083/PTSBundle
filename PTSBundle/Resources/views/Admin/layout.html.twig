@@ -31,7 +31,8 @@
 {# Transaction and Event Log Tables #}
 <div id="logtablediv">
 <br><strong>Tube System Users</strong>
-&nbsp;&nbsp;<a href="{{ path('pts_admin_eu', {'slug': 0 }) }}">[add new user]</a><br><br>
+&nbsp;&nbsp;<a href="{{ path('pts_admin_eu', {'slug': 0 }) }}">[add new user]</a>
+&nbsp;&nbsp;<a href="{{ path('pts_admin_upload') }}">[upload new users]</a><br><br>
 	<table class="log-table">
 
 	<tr>
@@ -39,7 +40,7 @@
 		<th><a href="{{ path('pts_admin_sort', {'sort': 'bn', active: act }) }}">Badge Number</a></th>
 		<th><a href="{{ path('pts_admin_sort', {'sort': 'ln', active: act }) }}">Last Name</a></th>
 		<th><a href="{{ path('pts_admin_sort', {'sort': 'fn', active: act }) }}">First Name</a></th>
-		<th>Active <a href="{{ path('pts_admin_sort', {'sort': lastsort, 'active': 'ay'}) }}">[Y]
+		<th><abbr title="Click N for inactive users">Active</abbr> <a href="{{ path('pts_admin_sort', {'sort': lastsort, 'active': 'ay'}) }}">[Y]
 		           <a href="{{ path('pts_admin_sort', {'sort': lastsort, 'active': 'an'}) }}">[N]</th>
 		<th><a href="{{ path('pts_admin_sort', {'sort': 'la', active: act }) }}">Last Activity</a></th>
 		<th>Actions</th>

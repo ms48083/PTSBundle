@@ -17,7 +17,7 @@ MSTS\PTSBundle\Entity\PTSUser:
     - NotBlank: ~
     - Range:
        min: 150000000000
-       max: 155999999999
+       max: 159999999999
        minMessage: Must be at least 150000000000
-       maxMessage: Must be no more than 155999999999
+       maxMessage: Must be no more than 159999999999
        invalidMessage: Must be numeric

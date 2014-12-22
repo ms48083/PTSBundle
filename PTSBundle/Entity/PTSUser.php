@@ -2,6 +2,7 @@
 namespace MSTS\PTSBundle\Entity;
 
 use MSTS\PTSBundle\Entity\PTSDatalog;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class PTSUser
 {
@@ -101,6 +102,33 @@ class PTSUser
 	public function setRecNo($RecNo) {
 		$this->RecNo = $RecNo;
 	}
+// ...
+//class Document
+//{
+    
+    private $file;
+
+    /**
+     * Sets file.
+     *
+     * @param UploadedFile $file
+     */
+    public function setFile(UploadedFile $file = null)
+    {
+        $this->file = $file;
+    }
+
+    /**
+     * Get file.
+     *
+     * @return UploadedFile
+     */
+    public function getFile()
+    {
+        return $this->file;
+    }
+//}
+
 
 }
 

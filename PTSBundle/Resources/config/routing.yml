@@ -53,6 +53,14 @@ pts_admin_eu:
     requirements:
         slug:  \d+
 
+pts_admin_upload:
+    pattern:  /admin/upload
+    defaults: { _controller: MSTSPTSBundle:Admin:uploadusers }
+
+pts_auto_upload:
+    pattern:  /autoupload
+    defaults: { _controller: MSTSPTSBundle:Admin:autouploadusers }
+
 pts_system:
     pattern:  /sys2321
     defaults: { _controller: MSTSPTSBundle:System:index }

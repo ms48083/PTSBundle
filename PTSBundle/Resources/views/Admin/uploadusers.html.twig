@@ -1,0 +1,35 @@
+{% extends '::base.html.twig' %}
+{# ADMIN uploadusers.html.twig #}
+
+{% block body %}
+<body>
+<div id="simplecontent">
+<strong>System Administration</strong>
+<br><strong>Upload Users From a CSV File</strong>
+<br>Input file format: Employee ID, Last Name, First Name, Badge ID number
+<br>
+{% for flashMessage in app.session.flashbag.get('notice') %}
+	<div class="flash-notice">
+		{{ flashMessage }}
+	</div>
+{% endfor %}
+{% if message is defined %}<br>{{ message }}{% endif %}
+{% if stats is defined %}
+    <br>
+    Added  {{ stats.Added }}<br>
+    Updated  {{ stats.Updated }}<br>
+    Skipped  {{ stats.Skipped }}<br>
+    Errors  {{ stats.Errors }}<br>
+    Total  {{ stats.Processed }}<br>
+{% endif %}
+<br>
+<br>
+<form class="uploadusers" action="{{ path('pts_admin_upload') }}" method="post" enctype="multipart/form-data">
+	<br><INPUT type="file" name="myfile" accept=".csv,.CSV"></INPUT>
+    <br><br><INPUT type="checkbox" name="header" value=1 checked> Has header Row</INPUT>
+	<br><br><INPUT type="submit" name="upload" value="Upload"></INPUT>
+</form>
+</div>
+
+</body>
+{% endblock %}

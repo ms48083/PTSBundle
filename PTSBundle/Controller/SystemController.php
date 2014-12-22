@@ -18,6 +18,7 @@ class SystemController extends Controller
 		$transct = $request->query->get('trct', '0');
 		$refresh = $request->query->get('refr', NULL);
 		$recno = $request->query->get('rno', 0);
+        $gao = $request->query->get('gao', 0);
 		//file_put_contents('request_dump.txt', print_r($request, true));
 		//echo var_dump($request);
 // ENSURE REQUEST IS FROM MAINSTREAM, OTHERWISE SEND 404 RESPONSE
@@ -26,10 +27,13 @@ class SystemController extends Controller
 		$eUsers = new PTSDatalog();
 		// $where['active'] = $active; //'Y'; // array('active' => 'Y');  // active users only
 		//$where['sort'] = 'la';  // sort by status date
-        $where['sort'] = 'arn';  // sort by Active (N first) then Record Number
+        //$where['sort'] = 'arn';  // sort by Active (N first) then Record Number THIS DOESN'T WORK AS NEEDED
+        $where['sort'] = 'rn';  // sort by Record Number only
         $limit = 50;
 		$where['numrows'] = $limit+1;  // limit number of records THIS VALUE LINKS WITH tcpServerCheck IN MAINSTREAM V4.23 and above
         $where['recnos'] = $recno;
+        if ($gao > 0) $where['active'] = 'ay'; // active users only
+        
 		// $where['statusdate'] = '2013-10-25 00:00:00';  // at or after date
 		$where['statusdate'] =  substr($refresh,0,4) . '-' . substr($refresh,4,2) . '-' . substr($refresh,6,2) . ' ';
 		$where['statusdate'] .= substr($refresh,8,2) . ':' . substr($refresh,10,2) . ':' . substr($refresh,12,2);

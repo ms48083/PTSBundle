@@ -16,11 +16,11 @@
 		<col width=65>
 		<col width=70>
 		<col width=95>
-		<col width=150>
-		<col width=75>
-		<col width=100>
+		<col width=165>
+		<col width=70>
+		<col width=95>
 		<col width=20>
-		<col width=100>
+		<col width=95>
 		<col width=100>
 		<col width=100>
 		<col width=130>
@@ -31,7 +31,7 @@
 		<th>Trans#</th>
 		<th>Event Type</th>
 		<th>Event Start</th>
-		<th>Duration</th>
+		<th><abbr title="seconds">Duration</abbr></th>
 		<th>Main Station</th>
 		<th> </th>
 		<th>Sub Station</th>
@@ -100,7 +100,7 @@
 			<td>{{ entry.TransNum }}</td>
 			<td>{#{{ entry.EventType }}.#}{{ entry.strEvent }}</td>
 			<td>{{ entry.EventStart }}</td>
-			<td>{{ entry.Duration }}</td>
+			<td align="right">{{ entry.Duration }}</td>
 			<td>{# {{ entry.Source }}. #}{{ entry.MainStationName }}</td>
 			<td>{% if (entry.Source == 0) and (entry.Status < 32) %} 
 			<img src="{{ asset('bundles/mstspts/images/arrow-right1.png') }}" alt="" width="16" height="15" />
