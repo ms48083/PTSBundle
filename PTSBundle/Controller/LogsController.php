@@ -10,6 +10,7 @@ use MakerLabs\PagerBundle\Adapter\ArrayAdapter;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
+// nochange change
 class LogsController extends Controller
 {
     public function indexAction(Request $request, $badge)
