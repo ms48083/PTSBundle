@@ -44,7 +44,7 @@ class SystemController extends Controller
 		// query database for 1 page of user records since timestamp
 		// return those records to the requester
 		
-		// build up the response string
+		// build up the user list response string
 		$userrecs = "";
 		$lastdate = "";
 		if (count($eUserArray) > 0) {
@@ -74,9 +74,17 @@ class SystemController extends Controller
             if ($more) $userrecs .= ',l' . $eUserArray[$bound-1]['RecNo']; // add last record number
             else $userrecs .= ',l0'; // add last record as 0 - no more
 		}
-		// $userrecs .= gettype($refresh);
-		// $userrecs .= ' ' . $where['statusdate'];
-        return new Response('<html><body>PTS ' . date("d-m-y H:i:s T") . '</body></html><!--sysnum['. $sysnum . ']refr[' . $refresh . ']users[' . $userrecs . ']time[' . date("YmdHisT") . ']-->');
+        // determine last contiguous transaction for this system
+        $transno = $eUsers->getLastContTrans($sysnum);
+        // build up response
+        $respo = '<html><body>PTS ' . date("d-m-y H:i:s T") . '</body></html>';
+        $respo .= '<!--sysnum['. $sysnum;
+        $respo .= ']refr[' . $refresh;
+        $respo .= ']users[' . $userrecs;
+        $respo .= ']time[' . date("YmdHisT");
+        $respo .= ']trans[' . $transno;
+        $respo .= ']-->';
+        return new Response($respo);
 		
         //return new Response('<html><body>Colombo Pneumatic Tube System ' . date("j-M-Y h:i:s A T") . '</body></html><!--sysnum['. $sysnum . ']refr[' . $refresh . ']users[' . $userrecs . ']-->');
 		//return $this->render('MSTSPTSBundle:System:layout.html.twig');

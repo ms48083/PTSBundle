@@ -337,7 +337,7 @@ class PTSDatalog
 		$mysqli->close();
 		return $stmt;
 	}
-public function countUserRecords($qryfilters) {
+    public function countUserRecords($qryfilters) {
         // count how many active users
 		// connect to database
 		$mysqli = new \mysqli("localhost", "pts_logger","colombopts", "pts_datalog");
@@ -364,6 +364,33 @@ public function countUserRecords($qryfilters) {
 		$resall = $res->fetch_row();
 
 		return $resall;	
+    }
+    public function getLastContTrans($sysnum)
+    {   // return the parameter for last contiguous transaction number
+        // connect to database
+        $mysqli = new \mysqli("localhost", "pts_logger","colombopts", "pts_datalog");
+        if ($mysqli->connect_errno) {
+            echo "Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
+        }
+        // form the query
+        $qry = "SELECT ParVal2 FROM parameters WHERE ParName = 'LastContTrans' AND ParVal1 = ".$sysnum;
+        
+        // prepare sql for query
+        if (!($stmt = $mysqli->prepare($qry))) {
+            echo "Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error;
+            echo $qry;
+        }
+        // execute query
+        if (!$stmt->execute()) {
+             echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+        }
+
+        // capture results
+        if (!($res = $stmt->get_result())) {
+            echo "Getting result set failed: (" . $stmt->errno . ") " . $stmt->error;
+        }
+        $resall = $res->fetch_row();
+        return $resall[0];
+    }
 }
-	}
 ?>
