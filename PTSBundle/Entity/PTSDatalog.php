@@ -17,11 +17,21 @@ class PTSDatalog
 	public $Falgs;
 	public $RcvId;
 	public $RcvTime;
+    protected $dbconn;
 	
-
+    function dbConnect() {
+        $dbhost = "localhost";
+        $dbuser = "pts_logger";
+        $dbpass = "colombopts";
+        $dbname = "pts_datalog";
+        $conn = new \mysqli($dbhost, $dbuser, $dbpass, $dbname);
+        $this->dbconn = $conn;
+        return;
+    }
 	function getAllResults($qryfilters) {
 		// connect to database
-		$mysqli = new \mysqli("localhost", "pts_logger","colombopts", "pts_datalog");
+		$this->dbConnect();
+        $mysqli = $this->dbconn;
 		if ($mysqli->connect_errno) {
 			echo "Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
 		}
@@ -215,7 +225,8 @@ class PTSDatalog
 	
 	public function getUserRecords($qryfilters) {
 		// connect to database
-		$mysqli = new \mysqli("localhost", "pts_logger","colombopts", "pts_datalog");
+		$this->dbConnect();
+        $mysqli = $this->dbconn;
 		if ($mysqli->connect_errno) {
 			echo "Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
 		}
@@ -296,7 +307,8 @@ class PTSDatalog
 		// if RecNo = 0 or NULL then add new, otherwise update existing
 		
 		// connect to database
-		$mysqli = new \mysqli("localhost", "pts_logger","colombopts", "pts_datalog");
+		$this->dbConnect();
+        $mysqli = $this->dbconn;
 		if ($mysqli->connect_errno) {
 			echo "Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
 		}
@@ -340,7 +352,8 @@ class PTSDatalog
     public function countUserRecords($qryfilters) {
         // count how many active users
 		// connect to database
-		$mysqli = new \mysqli("localhost", "pts_logger","colombopts", "pts_datalog");
+		$this->dbConnect();
+        $mysqli = $this->dbconn;
 		if ($mysqli->connect_errno) {
 			echo "Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
 		}
@@ -368,7 +381,8 @@ class PTSDatalog
     public function getLastContTrans($sysnum)
     {   // return the parameter for last contiguous transaction number
         // connect to database
-        $mysqli = new \mysqli("localhost", "pts_logger","colombopts", "pts_datalog");
+		$this->dbConnect();
+        $mysqli = $this->dbconn;
         if ($mysqli->connect_errno) {
             echo "Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
         }
