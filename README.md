@@ -1,12 +1,12 @@
 # README #
 
-This README would normally document whatever steps are necessary to get your application up and running.
+This is the README for the Pneumatic Tube System Web Interface
 
 ### What is this repository for? ###
 
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
+* The PTS Web Interface is a Symfony project for the web-based user interface
+* 
+* 
 
 ### How do I get set up? ###
 
@@ -25,5 +25,13 @@ This README would normally document whatever steps are necessary to get your app
 
 ### Who do I talk to? ###
 
-* Repo owner or admin
-* Other community or team contact
+* Mike Schwedt
+* MS Techology Solutions
+* 248-318-1459
+* ms48083@gmail.com
+*
+* Colombo Pneumatic Tube Systems
+* 10421 Enterprise Dr.
+* Davisburg, MI 48350
+* (800) 547-2820 (phone)
+* info@colombopts.com
