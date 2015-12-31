@@ -406,5 +406,37 @@ class PTSDatalog
         $resall = $res->fetch_row();
         return $resall[0];
     }
+    public function getTransCount($lastDays)
+    {   // return summary of transactions
+        // Input parameter lastDays to return summary since #days prior to now
+        // connect to database
+		$this->dbConnect();
+        $mysqli = $this->dbconn;
+        if ($mysqli->connect_errno) {
+            echo "Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
+        }
+        // form the query
+        $qry = "SELECT DISTINCT Status, COUNT(Status) AS Qty FROM eventlog";
+        $qry .= " WHERE EventStart > DATE_SUB(NOW(), INTERVAL ".$lastDays." DAY)";
+        $qry .= " GROUP BY Status ORDER BY Status";
+        
+        // prepare sql for query
+        if (!($stmt = $mysqli->prepare($qry))) {
+            echo "Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error;
+            echo $qry;
+        }
+        // execute query
+        if (!$stmt->execute()) {
+             echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+        }
+
+        // capture results
+        if (!($res = $stmt->get_result())) {
+            echo "Getting result set failed: (" . $stmt->errno . ") " . $stmt->error;
+        }
+        $resall = $res->fetch_all(MYSQLI_ASSOC);
+        return $resall;
+    }
+    
 }
 ?>

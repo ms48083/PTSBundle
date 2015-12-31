@@ -140,6 +140,18 @@ class AdminController extends Controller
         $qry = ""; // no parameters yet
         $dbcount = $eUsers->countUserRecords($qry);
         $uuResult .= "Total Active: ".$dbcount[0];
+        
+        // and also return a daily transaction summary
+        $transSummary = $eUsers->getTransCount(1);
+        $uuResult .= "\n\nLog Summary (last 24 hours)\n";
+        // var_dump($transSummary);
+        // Record Keys "Status" and "Qty"
+        foreach ($transSummary as $record) {
+            foreach ($record as $key => $value) {
+                if ($key == "Status") { $uuResult .= $eUsers->eventString($value)." ".$eUsers->statusString($value); }
+                if ($key == "Qty") { $uuResult .= ": ".$value."\n"; }
+            }
+        }        
         return new Response($message.$uuResult);
         
     }
