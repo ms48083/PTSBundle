@@ -1,0 +1,8 @@
+Find new files in the local repository
+git add .
+
+Commit changes to local repository
+git commit -m "Commit message"
+
+Copy changes to master github
+git push origin master
