@@ -209,6 +209,7 @@ class PTSDatalog
 		elseif ($StatusValue <= 9) {$myStr = "Incomplete";}
 		elseif ($StatusValue == 32) {$myStr = "Secure ID";}
 		elseif ($StatusValue == 33) {$myStr = "Std Scan";}
+		elseif ($StatusValue == 34) {$myStr = "Unauth Scan";}
 		elseif ($StatusValue == 64) {$myStr = "Door Open";}
 		elseif ($StatusValue == 65) {$myStr = "Man.Purge";}
 		elseif ($StatusValue == 66) {$myStr = "Aut.Purge";}

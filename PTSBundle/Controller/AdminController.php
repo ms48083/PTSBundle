@@ -72,20 +72,26 @@ class AdminController extends Controller
 				if ($form->isValid())
 				{	// $PTSUser is now bound??
 					//echo var_dump("Data is Valid");
-					if ($PTSUser->saveUser())
-					{  // save ok or not ok
-					}
-					
-					$this->get('session')->getFlashBag()->add('notice', 'Changes Saved!');
-					// save or save+add
-					if ($request->request->get('save')) {
-						return $this->redirect($this->generateUrl('pts_admin'));
-						//return new Response('<h1>Temporary Save Target</h1>');
-					} elseif ($request->request->get('saveadd')) {
-						return $this->redirect($this->generateUrl('pts_admin_eu', array('slug' => 0)));
+                    $rslt = $PTSUser->saveUser();
+                    //echo var_dump($rslt);
+                    // return new Response('what up?');
+					if ($rslt->errno)
+					{  // save failed
+                        $this->get('session')->getFlashBag()->add('notice', $rslt->error);
+                        return $this->render('MSTSPTSBundle:Admin:edituser2.html.twig', array('form' => $form->createView(), 'RecNo' => $PTSUser->getRecNo()) );
 					} else {
-						return new Response('<h1>Submit type not detected</h1>');
-					}
+					    // save ok
+                        $this->get('session')->getFlashBag()->add('notice', 'Changes Saved!');
+                        // save or save+add
+                        if ($request->request->get('save')) {
+                            return $this->redirect($this->generateUrl('pts_admin'));
+                            //return new Response('<h1>Temporary Save Target</h1>');
+                        } elseif ($request->request->get('saveadd')) {
+                            return $this->redirect($this->generateUrl('pts_admin_eu', array('slug' => 0)));
+                        } else {
+                            return new Response('<h1>Submit type not detected</h1>');
+                        }
+                    }
 				} else {
 					// form not validated, go back and try again
 					//echo var_dump("Data is Not Valid");
